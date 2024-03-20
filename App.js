@@ -1,20 +1,32 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, View, FlatList } from "react-native";
+import Header from "./src/components/Header/header";
+import { SafeAreaView } from "react-native-safe-area-context";
+import Search from "./src/components/Search/search";
+import StockCard from "./src/components/Stocks/StockCard";
+import store from "./src/data/store.json";
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <SafeAreaView style={styles.container}>
+      <View style={styles.headerContainer}>
+        <Header header="PATIKASTORE" />
+        <Search search="Search..." />
+      </View>
+      <FlatList
+        keyExtractor={(item, index) => item.id.toString()}
+        data={store}
+        numColumns={2}
+        renderItem={({ item }) => <StockCard stock={item} />}
+      />
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    backgroundColor: "#fff",
+    paddingVertical: 10,
+    paddingHorizontal: 15,
   },
 });
